@@ -1,5 +1,5 @@
 import { useAuth } from "./AuthProvider";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 export default function AuthStatus() {
   const auth = useAuth();
@@ -13,7 +13,7 @@ export default function AuthStatus() {
    } else {
      return (
        <li>
-         <NavLink to="/logout">Logout (Logged in as {auth.username}) </NavLink>
+         <Link to="/logout">Logout (Logged in as {auth.username}) </Link>
        </li>
      );
    }

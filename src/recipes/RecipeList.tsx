@@ -2,9 +2,10 @@ import { Link, useSearchParams } from "react-router-dom";
 import "./RecipesLayout.css";
 import { useEffect, useState } from "react";
 import { Recipe as APIRecipe, getRecipes } from "../services/apiFacade";
-//import { useAuth } from "../security/_Authprovider";
+import { useAuth } from "../security/AuthProvider";
 
 export default function RecipeList() {
+  const auth = useAuth();
   const [queryString] = useSearchParams();
   const initialCategory = queryString.get("category");
   //const initialCategory = null;
@@ -24,8 +25,9 @@ export default function RecipeList() {
     return (
       <li key={recipe.id}>
         <Link to={`${recipe.id}`}>{recipe.name}</Link>,
-        {/*TODO:Eventually this should only be added for a logged in user*/}
+        {auth.isLoggedIn() && (
         <Link className="recipe-btn" to="/add" state={recipe}>Edit </Link>
+        )}
       </li>
     );
   });

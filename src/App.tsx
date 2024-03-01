@@ -12,6 +12,7 @@ import "./App.css";
 import ContactPage from "./recipes/ContactPage";
 import PageNotFound from "./recipes/PageNotFound";
 import Logout from "./security/Logout";
+import RequireAuth from "./security/RequireAuth";
 
 export default function App() {
   //const auth = useAuth();
@@ -24,7 +25,11 @@ export default function App() {
           {/**<Route path="test" element={<h1>Test</h1>} />*/}
           <Route path=":id" element={<Recipe />} />
         </Route>
-        <Route path="/add" element={<RecipeForm />} />
+        <Route path="/add" element={
+          <RequireAuth roles={["ADMIN"]}>
+            <RecipeForm />
+          </RequireAuth>
+        } />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
