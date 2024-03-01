@@ -1,5 +1,5 @@
 import "./RecipeForm.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getCategories, addRecipe, deleteRecipe, Recipe } from "../services/apiFacade";
 import { useLocation } from "react-router-dom";
 
@@ -21,16 +21,16 @@ export default function RecipeForm() {
   //const [formData, setFormData] = useState<Recipe>(recipeToEdit || EMPTY_RECIPE);
   const [formData, setFormData] = useState<Recipe>(recipeToEdit || EMPTY_RECIPE);
 
-  // useEffect(() => {
-  //   getCategories().then((res) => setCategories(res));
-  // }, []);
+   useEffect(() => {
+     getCategories().then((res) => setCategories(res));
+   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const { name, value } = e.target;
-    // setFormData((prevFormData) => ({
-    //   ...prevFormData,
-    //   [name]: value,
-    // }));
+     const { name, value } = e.target;
+     setFormData((prevFormData) => ({
+       ...prevFormData,
+       [name]: value,
+     }));
   };
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     // e.preventDefault();
@@ -40,17 +40,20 @@ export default function RecipeForm() {
     // }
   };
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    // e.preventDefault();
-    // const newRecipe = await addRecipe(formData);
-    // alert("New recipe added")
-    // console.info("New/Edited Recipe", newRecipe);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const addedOrEdited = formData.id ? "edited" : "added";
+    const newRecipe = await addRecipe(formData);
+    alert(`Recipe ${addedOrEdited} successfully!`);
+    setFormData({ ...EMPTY_RECIPE });
+    console.log("newRecipe", newRecipe);
+
   };
 
   return (
     <>
       <h2>Recipes Add/Edit/Delete</h2>
-      <form id="recipeForm">
+      <form id="recipeForm" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="id">ID:</label>
           <input type="text" id="name" name="name" disabled value={formData.id || ""} />
@@ -133,10 +136,10 @@ export default function RecipeForm() {
           <label htmlFor="source">Source:</label>
           <input type="text" id="source" name="source" required />
         </div>
-      </form>
       <button type="submit" className="recipe-form-btn">
         Submit
       </button>
+      </form>
       <button
         className="recipe-form-btn"
         onClick={() => {

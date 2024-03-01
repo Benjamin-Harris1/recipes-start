@@ -5,9 +5,9 @@ import { Recipe as APIRecipe, getRecipes } from "../services/apiFacade";
 //import { useAuth } from "../security/_Authprovider";
 
 export default function RecipeList() {
-  //const [queryString] = useSearchParams();
-  //const initialCategory = queryString.get("category");
-  const initialCategory = null;
+  const [queryString] = useSearchParams();
+  const initialCategory = queryString.get("category");
+  //const initialCategory = null;
   const [recipes, setRecipes] = useState<Array<APIRecipe>>([]);
   const [category, setCategory] = useState<string | null>(initialCategory);
   const [error, setError] = useState("");
