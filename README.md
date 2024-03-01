@@ -4,7 +4,7 @@ This project demonstrates the use of React Router with TypeScript. It includes e
 
 ## Deployment
 
-Deployment:
+[Click here to see deployed version](https://thankful-hill-0dd3b4303.4.azurestaticapps.net/)
 
 For local development:
 
