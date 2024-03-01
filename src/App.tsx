@@ -11,6 +11,7 @@ import Home from "./Home";
 import "./App.css";
 import ContactPage from "./recipes/ContactPage";
 import PageNotFound from "./recipes/PageNotFound";
+import Logout from "./security/Logout";
 
 export default function App() {
   //const auth = useAuth();
@@ -26,7 +27,7 @@ export default function App() {
         <Route path="/add" element={<RecipeForm />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/logout" element={<Logout />} /> */}
+        <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Layout>
