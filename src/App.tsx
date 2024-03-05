@@ -13,6 +13,7 @@ import ContactPage from "./recipes/ContactPage";
 import PageNotFound from "./recipes/PageNotFound";
 import Logout from "./security/Logout";
 import RequireAuth from "./security/RequireAuth";
+import CategoryForm from "./recipes/CategoryForm";
 
 export default function App() {
   //const auth = useAuth();
@@ -28,6 +29,11 @@ export default function App() {
         <Route path="/add" element={
           <RequireAuth roles={["USER"]}>
             <RecipeForm />
+          </RequireAuth>
+        } />
+        <Route path="/add-category" element={
+          <RequireAuth roles={["ADMIN"]}>
+            <CategoryForm />
           </RequireAuth>
         } />
         <Route path="/contact" element={<ContactPage />} />

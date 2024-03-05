@@ -16,6 +16,11 @@ interface Recipe {
   source: string;
 }
 
+interface Category {
+  id: number | null;
+  name: string;
+}
+
 interface Info {
   reference: string;
   created: string;
@@ -28,11 +33,23 @@ let info:Info|null = null;
 
 async function getCategories(): Promise<Array<string>> {
   // Udkommentér denne linje for at se nye categories og ikke kun cache eller ændre så caching sker i en kortere periode
-  if (categories.length > 0) return [...categories];
+  //if (categories.length > 0) return [...categories];
   const res = await fetch(CATEGORIES_URL).then(handleHttpErrors);
   categories = [...res];
   return categories;
 }
+async function addCategory(category: Category): Promise<Category> {
+  const method = category.id ? "PUT" : "POST";
+  const options = makeOptions(method, category, true);
+  const URL = category.id ? `${CATEGORIES_URL}/${category.id}` : CATEGORIES_URL;
+  return fetch(URL, options).then(handleHttpErrors);
+}
+
+async function deleteCategory(id: number): Promise<Category> {
+  const options = makeOptions("DELETE", null, true);
+  return fetch(`${CATEGORIES_URL}/${id}`, options).then(handleHttpErrors);
+}
+
 async function getRecipes(category: string | null): Promise<Array<Recipe>> {
   //if (recipes.length > 0) return [...recipes];
   console.log("category", category);
@@ -65,4 +82,4 @@ async function getInfo(): Promise<Info> {
 
 export type { Recipe, Info };
 // eslint-disable-next-line react-refresh/only-export-components
-export { getCategories, getRecipes, getRecipe, addRecipe, deleteRecipe, getInfo };
+export { getCategories, addCategory, deleteCategory, getRecipes, getRecipe, addRecipe, deleteRecipe, getInfo };
