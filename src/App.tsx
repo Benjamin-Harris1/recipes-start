@@ -27,7 +27,7 @@ export default function App() {
           <Route path=":id" element={<Recipe />} />
         </Route>
         <Route path="/add" element={
-          <RequireAuth roles={["USER"]}>
+          <RequireAuth>
             <RecipeForm />
           </RequireAuth>
         } />
